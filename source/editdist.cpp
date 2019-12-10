@@ -22,8 +22,7 @@ void parse_dna(string input, int party, Integer output[]) {
 
 Integer intMin2(Integer a, Integer b) {
     Integer c = a - b;
-    Integer o = Integer(31, 1, PUBLIC);
-    Integer k = (c >> 31) & 1;
+    Integer k = (c >> 31) & Integer(31, 1, PUBLIC);
     return b + k * c;
 }
 
@@ -47,11 +46,11 @@ void test_editdist(string input_a, string input_b) {
     }
 
     for ( int i = 1; i < LEN; i++ ) {
-        d[POS(i, 0)] = i;
+        d[POS(i, 0)] = Integer(32, i, PUBLIC);
     }
 
     for ( int i = 1; i < LEN; i++ ) {
-        d[POS(0, i)] = i;
+        d[POS(0, i)] = Integer(32, i, PUBLIC);
     }
 
     // Are these necessary?
