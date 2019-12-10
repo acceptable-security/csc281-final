@@ -22,7 +22,8 @@ void parse_dna(string input, int party, Integer output[]) {
 
 Integer intMin2(Integer a, Integer b) {
     Integer c = a - b;
-    Integer k = (c >> 31) & Integer(31, 1, PUBLIC);
+    Integer k(32, 0, PUBLIC);
+    k.bits[0] = c.bits[31];
     return b + k * c;
 }
 
@@ -39,28 +40,38 @@ void test_editdist(string input_a, string input_b) {
 
     Integer d[LEN * LEN];
 
+    cout << "Doing setup... ";
+
     for ( int i = 0; i < LEN; i++ ) {
         for ( int j = 0; j < LEN; j++ ) {
             d[POS(i, j)] = Integer(32, 0, PUBLIC);
         }
     }
 
+    cout << "1... "
+
     for ( int i = 1; i < LEN; i++ ) {
         d[POS(i, 0)] = Integer(32, i, PUBLIC);
     }
+
+    cout << "2... "
 
     for ( int i = 1; i < LEN; i++ ) {
         d[POS(0, i)] = Integer(32, i, PUBLIC);
     }
 
+    cout << "3... " << endl;
+
     // Are these necessary?
     Integer one(32, 1, PUBLIC);
+
+    cout << "Doing main loop";
 
     for ( int j = 1; j < LEN; j++ ) {
         for ( int i = 1; i < LEN; i++ ) {
             // 0 if both are equal, 1 if not.
-            Integer cost = a[i] - b[j];
-            cost = cost / cost;
+            Integer cost(32, 0, PUBLIC);
+            cost.bits[0] = a[i].equal(b[j]);
 
             d[POS(i, j)] = intMin3(d[POS(i - 1, j)] + one,
                                    d[POS(i, j - 1)] + one,
