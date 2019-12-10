@@ -22,6 +22,7 @@ void parse_dna(string input, int party, Integer output[]) {
 
 Integer intMin2(Integer a, Integer b) {
     Integer c = a - b;
+    Integer o = Integer(31, 1, PUBLIC);
     Integer k = (c >> 31) & 1;
     return b + k * c;
 }
@@ -64,7 +65,7 @@ void test_editdist(string input_a, string input_b) {
 
             d[POS(i, j)] = intMin3(d[POS(i - 1, j)] + one,
                                    d[POS(i, j - 1)] + one,
-                                   d[POS(i - 1, j - 1) + cost]);
+                                   d[POS(i - 1, j - 1)] + cost);
         }
     }
 
@@ -86,31 +87,22 @@ int main(int argc, char** argv) {
       return 0;
     }
 
-    cout << "Calculating inner product of two inputs of length " << LEN << endl;
+    cout << "Calculating edit distance of length " << LEN << endl;
 
-    char fname_a[40];
-    char fname_b[40];
+    ifstream infile_a("../data/editdist/1.dat");
+    ifstream infile_b("../data/editdist/2.dat");
 
-    sprintf(fname_a, "../data/editdist/1.dat");
-    sprintf(fname_b, "../data/editdist/2.dat");
-
-    ifstream infile_a(fname_a);
-    ifstream infile_b(fname_b);
-
-    string inputs_a[LEN];
-    string inputs_b[LEN];
+    string inputs_a;
+    string inputs_b;
 
     if( infile_a.is_open() && infile_b.is_open()) {
-        for( int i=0; i<LEN; i++) {
-            getline( infile_a, inputs_a[i]);
-            getline( infile_b, inputs_b[i]);
-        }
+        getline(infile_a, inputs_a);
+        getline(infile_b, inputs_b);
+
         infile_a.close();
         infile_b.close();
     }
 
-    test_editdist(inputs_a, inputs_b, LEN);
+    test_editdist(inputs_a, inputs_b);
     delete io;
 }
-
-
