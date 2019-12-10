@@ -4,7 +4,6 @@
 using namespace emp;
 using namespace std;
 
-
 int LEN = 5;
 
 #define POS(x, y) ((X * LEN) + (Y))
@@ -63,18 +62,13 @@ void test_editdist(int bitsize, string input_a, string input_b) {
         d[POS(0, i)] = i;
     }
 
+    // Are these necessary?
     Integer one(bitsize, 1, PUBLIC);
+    Itneger zero(bitsize, 0, PUBLIC);
 
     for ( int j = 1; j < LEN; j++ ) {
         for ( int i = 1; i < LEN; i++ ) {
-            Integer cost;
-
-            if ( a[i] == b[j] ) {
-                cost = Integer(bitsize, 0, PUBLIC);
-            }
-            else {
-                cost = Integer(bitsize, 1, PUBLIC);
-            }
+            Integer cost = a[i] == b[j] ? zero : one;
 
             d[POS(i, j)] = intMin(d[POS(i - 1, j)] + one,
                                   d[POS(i, j - 1)] + one,
@@ -84,7 +78,6 @@ void test_editdist(int bitsize, string input_a, string input_b) {
 
     cout << "DIST: " << d[POS(LEN - 1, LEN - 1)].reveal<int>() << endl;
 }
-
 
 int main(int argc, char** argv) {
     int bitsize;

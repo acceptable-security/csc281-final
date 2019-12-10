@@ -26,6 +26,32 @@ def gen_mult3_input(n) :
     fy.close()
     print("expected value: %d"%reduce(mul, [x+y for x,y in zip(xs,ys)], 1))
 
+def levenshtein(a, b):
+    if len(a) == 0: return len(b)
+    if len(b) == 0: return len(a)
+
+    cost = 0 if a[-1] == b[-1] else 1
+
+    return min(
+        levenshtein(a[:-1], b) + 1,
+        levenshtein(a, b[:-1]) + 1,
+        levenshtein(a[:-1], b[:-1]) + 1
+    )
+
+def gen_editdist_input(l):
+    alphabet = "atgc"
+    alice = ''.join([ random.choice(alphabet) for i in range(l) ])
+    bob = ''.join([ random.choice(alphabet) for i in range(l) ])
+
+    fa = open("data/editdist/1.dat", 'w')
+    fa.write(alice)
+    fa.close()
+
+    fb = open("data/editdist/2.dat", 'w')
+    fb.write(bob)
+    fb.close()
+
+    print("expected value:", levenshtein(alice, bob))
 
 def gen_input(program, n, l):
     bits = (n - int(math.log(l, 2))) / 2
@@ -70,8 +96,8 @@ if __name__ == "__main__":
     parser.add_argument('-n', default=32, type=int, 
         help="integer bit length")
     parser.add_argument('-l', default=10, type=int, 
-        help="array length (for innerprod, xtabs)")
-    programs = ["mult3","innerprod","xtabs"]
+        help="array length (for innerprod, xtabs, editdist)")
+    programs = ["mult3","innerprod","xtabs", "editdist"]
     parser.add_argument('-e', default="xtabs", choices = programs,
         help="program selection")
     args = parser.parse_args()
@@ -87,4 +113,6 @@ if __name__ == "__main__":
     elif args.e == "xtabs":
         gen_xtabs_input(args.n, args.l)
 
+    elif args.e == "editdist":
+        gen_editdist_input(args.l)
 
