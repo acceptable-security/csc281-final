@@ -48,13 +48,13 @@ void test_editdist(string input_a, string input_b) {
         }
     }
 
-    cout << "1... "
+    cout << "1... ";
 
     for ( int i = 1; i < LEN; i++ ) {
         d[POS(i, 0)] = Integer(32, i, PUBLIC);
     }
 
-    cout << "2... "
+    cout << "2... ";
 
     for ( int i = 1; i < LEN; i++ ) {
         d[POS(0, i)] = Integer(32, i, PUBLIC);
