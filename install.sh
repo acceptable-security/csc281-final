@@ -24,6 +24,7 @@ mv test/geninput.py .
 echo "add_test (mult3)" >> CMakeLists.txt
 echo "add_test (innerprod)" >> CMakeLists.txt
 echo "add_test (editdist)" >> CMakeLists.txt
+echo "add_test (editdist-socket)" >> CMakeLists.txt
 echo "add_test (xtabs)" >> CMakeLists.txt
 
 # build project
