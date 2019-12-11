@@ -40,7 +40,7 @@ Integer intMin3(Integer a, Integer b, Integer c) {
     return intMin2(intMin2(a, b), c);
 }
 
-void test_editdist(string input_a, string input_b) {
+int test_editdist(string input_a, string input_b) {
 	Integer a[LEN];
 	Integer b[LEN];
 
@@ -79,7 +79,7 @@ void test_editdist(string input_a, string input_b) {
         }
     }
 
-    cout << "DIST: " << d[POS(LEN, LEN)].reveal<int>() << endl;
+    return d[POS(LEN, LEN)].reveal<int>();
 }
 
 int do_setup(char* input, int party, int port) {
@@ -116,5 +116,7 @@ int main(int argc, char** argv) {
         itoa(output, (char*) str_output, 10);
 
         sock.send(client_id, strlen(str_output) + 1, str_output);
+
+        return true;
     });
 }

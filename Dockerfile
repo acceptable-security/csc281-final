@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   sudo \
   software-properties-common \
-  nano
+  nano \
+  wget
 ADD source/ /root/source
 ADD web/ /root/web
 ADD README.md .
