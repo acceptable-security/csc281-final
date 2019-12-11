@@ -110,6 +110,11 @@ int main(int argc, char** argv) {
     int port = atoi(argv[3]);
 
     sock.listen([&](uint32_t client_id, uint32_t size, uint8_t* data) -> bool {
+        if ( size != 6 ) {
+            std::cout << "Invalid message: " << data << std::endl;
+            return true;
+        }
+
         std::cout << "Received response from " << client_id << std::endl;
 
         int output = do_setup((char*) &data[1], data[0] == 'A' ? ALICE : BOB, port);
