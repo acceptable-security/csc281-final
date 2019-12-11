@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   sudo \
   software-properties-common \
-  vim
+  nano
 ADD source/ /root/source
 ADD README.md .
 ADD install.sh .

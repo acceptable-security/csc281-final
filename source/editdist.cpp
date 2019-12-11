@@ -6,10 +6,20 @@ using namespace std;
 
 int LEN = 5;
 
-#define POS(X, Y) ((X * LEN) + (Y))
+#define POS(X, Y) (((Y) * LEN) + (X))
+
+Integer bitToInt(Bit bit, int owner) {
+    Integer x(32, 0, owner);
+    x[0] = bit;
+    return x;
+}
 
 void parse_dna(string input, int party, Integer output[]) {
-    for ( int i = 0; i < input.size(); i++ ) {
+    if ( input.size() != LEN )  {
+        throw invalid_argument("invalid input length");
+    }
+
+    for ( int i = 0; i < LEN; i++ ) {
         switch ( input[i] ) {
             case 'A': case 'a': output[i] = Integer(32, 0, party); break;
             case 'T': case 't': output[i] = Integer(32, 1, party); break;
@@ -21,10 +31,7 @@ void parse_dna(string input, int party, Integer output[]) {
 }
 
 Integer intMin2(Integer a, Integer b) {
-    Integer c = a - b;
-    Integer k(32, 0, PUBLIC);
-    k.bits[0] = c.bits[31];
-    return b + k * c;
+    return b + bitToInt(a < b, PUBLIC) * (a - b);
 }
 
 Integer intMin3(Integer a, Integer b, Integer c) {
@@ -35,67 +42,55 @@ void test_editdist(string input_a, string input_b) {
 	Integer a[LEN];
 	Integer b[LEN];
 
+    cout << "Parsing DNA sequence" << endl;
+
     parse_dna(input_a, ALICE, a);
     parse_dna(input_b, BOB, b);
 
-    Integer d[LEN * LEN];
+    Integer d[(LEN + 1) * (LEN + 1)];
 
-    cout << "Doing setup... ";
-
-    for ( int i = 0; i < LEN; i++ ) {
-        for ( int j = 0; j < LEN; j++ ) {
+    for ( int i = 0; i < LEN + 1; i++ ) {
+        for ( int j = 0; j < LEN + 1; j++ ) {
             d[POS(i, j)] = Integer(32, 0, PUBLIC);
         }
     }
 
-    cout << "1... ";
-
-    for ( int i = 1; i < LEN; i++ ) {
+    for ( int i = 1; i < LEN + 1; i++ ) {
         d[POS(i, 0)] = Integer(32, i, PUBLIC);
     }
 
-    cout << "2... ";
-
-    for ( int i = 1; i < LEN; i++ ) {
+    for ( int i = 1; i < LEN + 1; i++ ) {
         d[POS(0, i)] = Integer(32, i, PUBLIC);
     }
-
-    cout << "3... " << endl;
 
     // Are these necessary?
     Integer one(32, 1, PUBLIC);
 
-    cout << "Doing main loop";
-
-    for ( int j = 1; j < LEN; j++ ) {
-        for ( int i = 1; i < LEN; i++ ) {
+    for ( int j = 1; j < LEN + 1; j++ ) {
+        for ( int i = 1; i < LEN + 1; i++ ) {
             // 0 if both are equal, 1 if not.
-            Integer cost(32, 0, PUBLIC);
-            cost.bits[0] = a[i].equal(b[j]);
+            Integer cost = one - bitToInt(a[i - 1].equal(b[j - 1]), PUBLIC);
 
-            d[POS(i, j)] = intMin3(d[POS(i - 1, j)] + one,
-                                   d[POS(i, j - 1)] + one,
+            d[POS(i, j)] = intMin3(d[POS(i - 1, j)]     + one,
+                                   d[POS(i,     j - 1)] + one,
                                    d[POS(i - 1, j - 1)] + cost);
         }
     }
 
-    cout << "DIST: " << d[POS(LEN - 1, LEN - 1)].reveal<int>() << endl;
+    cout << "DIST: " << d[POS(LEN, LEN)].reveal<int>() << endl;
 }
 
 int main(int argc, char** argv) {
-    // run computation with semi-honest model
+    if (argc != 3) {
+      cout << "Usage: ./editdist <party> <port>" << endl;
+      return 0;
+    }
+
     int port, party;
     parse_party_and_port(argv, &party, &port);
     NetIO * io = new NetIO(party==ALICE ? nullptr : "127.0.0.1", port);
 
     setup_semi_honest(io, party);
-
-    if (argc != 3) {
-      cout << "Usage: ./editdist <party> <port>" << endl
-           << endl;
-      delete io;
-      return 0;
-    }
 
     cout << "Calculating edit distance of length " << LEN << endl;
 
