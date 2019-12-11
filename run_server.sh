@@ -2,8 +2,14 @@
 
 set -e
 
-gwsocket -p 7890 --pipein=/tmp/tmpinA.fifo --pipeout=/tmp/tmpoutA.fifo --strict
-gwsocket -p 7891 --pipein=/tmp/tmpinB.fifo --pipeout=/tmp/tmpoutB.fifo --strict
+gwsocket -p 7890 \
+		 --pipein=/tmp/tmpinA.fifo   \
+		 --pipeout=/tmp/tmpoutA.fifo \
+		 --strict &
+gwsocket -p 7891 \
+		 --pipein=/tmp/tmpinB.fifo   \
+		 --pipeout=/tmp/tmpoutB.fifo \
+		 --strict &
 
 
 cd emp-sh2pc/build/

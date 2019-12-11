@@ -110,12 +110,16 @@ int main(int argc, char** argv) {
     int port = atoi(argv[3]);
 
     sock.listen([&](uint32_t client_id, uint32_t size, uint8_t* data) -> bool {
-        int output = do_setup(&data[1], data[0] == 'A' ? ALICE : BOB, port);
+        std::cout << "Received response from " << client_id << std::endl;
 
-        char str_output[33];
-        itoa(output, (char*) str_output, 10);
+        int output = do_setup((char*) &data[1], data[0] == 'A' ? ALICE : BOB, port);
+
+        uint8_t str_output[33];
+        sprintf(str_output, "%d", output);
 
         sock.send(client_id, strlen(str_output) + 1, str_output);
+
+        std::cout << "Finished" << std::endl;
 
         return true;
     });
