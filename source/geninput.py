@@ -35,7 +35,7 @@ def levenshtein(a, b):
     return min(
         levenshtein(a[:-1], b) + 1,
         levenshtein(a, b[:-1]) + 1,
-        levenshtein(a[:-1], b[:-1]) + 1
+        levenshtein(a[:-1], b[:-1]) + cost
     )
 
 def gen_editdist_input(l):
