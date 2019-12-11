@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
 ADD source/ /root/source
 ADD README.md .
 ADD install.sh .
+ADD install_sock.sh .
 RUN ["bash", "install.sh"]
+EXPOSE 8123
+RUN ["bash", "install_sock.sh"]
 CMD ["/bin/bash"]
 
