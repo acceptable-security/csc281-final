@@ -120,9 +120,9 @@ int main(int argc, char** argv) {
         int output = do_setup((char*) &data[1], data[0] == 'A' ? ALICE : BOB, port);
 
         uint8_t str_output[33];
-        sprintf(str_output, "%d", output);
+        sprintf((char*) str_output, "%d", output);
 
-        sock.send(client_id, strlen(str_output) + 1, str_output);
+        sock.send(client_id, strlen((const char*) str_output) + 1, str_output);
 
         std::cout << "Finished" << std::endl;
 
