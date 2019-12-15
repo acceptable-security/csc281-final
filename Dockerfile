@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
   sudo \
   software-properties-common \
   nano \
-  wget
+  wget \
+  python3-flask
 ADD source/ /root/source
 ADD web/ /root/web
 ADD README.md .

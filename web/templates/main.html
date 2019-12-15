@@ -17,7 +17,7 @@ window.onload = function() {
     function $(selector) {
         return document.querySelector(selector);
     }
-    var socket = new WebSocket('ws://172.17.0.2:7891');
+    var socket = new WebSocket('ws://172.17.0.2:{{ port }}');
     socket.onopen = function(event) {
         $('#messages').innerHTML = 'Connected<br>';
     };
@@ -28,7 +28,7 @@ window.onload = function() {
         $('#messages').innerHTML = 'Disconnected ' + event.reason;
     };
     $('#submit').onclick = function(e) {
-        socket.send($('input').value);
+        socket.send("{{ party }}" + $('input').value);
         $('#messages').innerHTML += 'Sent:<br>' + $('input').value + '<br>';
         $('input').value = '';
     };
