@@ -42,10 +42,12 @@ int exec_score(string input_a, string input_b, int _threshold) {
     Integer acc(32, 0, PUBLIC);
 
     for ( int i = 0; i < LEN; i++ ) {
-        acc = acc + input_a & input_b;
+        acc = acc + bitToInt(a[i].equals(b[i]), PUBLIC);
     }
 
-    return bitToInt(acc.geq(threshold, PUBLIC)).reveal<int>();
+    Integer out = bitToInt(acc.geq(threshold, PUBLIC));
+
+    return out.reveal<int>();
 }
 
 int do_setup(char* input, int party, int threshold, int port) {
@@ -87,7 +89,7 @@ int main(int argc, char** argv) {
         char* raw_data = (char*) &data[1];
 
         // TODO: dynamic threshold
-        int output = do_setup(raw_, party, 7, port);
+        int output = do_setup(raw_data, party, 7, port);
 
         uint8_t str_output[33];
         sprintf((char*) str_output, "%d", output);
