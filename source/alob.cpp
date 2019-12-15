@@ -42,10 +42,10 @@ int exec_score(string input_a, string input_b, int _threshold) {
     Integer acc(32, 0, PUBLIC);
 
     for ( int i = 0; i < LEN; i++ ) {
-        acc = acc + bitToInt(a[i].equals(b[i]), PUBLIC);
+        acc = acc + bitToInt(a[i].equal(b[i]), PUBLIC);
     }
 
-    Integer out = bitToInt(acc.geq(threshold, PUBLIC));
+    Integer out = bitToInt(acc.geq(threshold), PUBLIC);
 
     return out.reveal<int>();
 }
