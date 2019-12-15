@@ -21,6 +21,6 @@ ADD run_server.sh .
 RUN ["bash", "pre_install.sh"]
 RUN ["bash", "install.sh"]
 EXPOSE 8000
-EXPOSE 49000-50000
+EXPOSE 49100-50000
 RUN ["bash", "install_sock.sh"]
 CMD ["/bin/bash"]
