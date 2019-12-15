@@ -1,43 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
-<style>
-pre {
-    background: #EEE;
-    border: 1px solid #CCC;
-    padding: 10px;
-}
-#page-wrapper {
-    border-top: 5px solid #69c773;
-    margin: 1em auto;
-    width: 950px;
-}
-</style>
-<script>
-window.onload = function() {
-    function $(selector) {
-        return document.querySelector(selector);
-    }
-    var socket = new WebSocket('ws://45.77.146.68:{{ port }}');
-    socket.onopen = function(event) {
-        $('#messages').innerHTML = 'Connected<br>';
-    };
-    socket.onmessage = function(event) {
-        $('#messages').innerHTML += 'Received:<br>' + event.data + '<br>';
-    };
-    socket.onclose = function(event) {
-        $('#messages').innerHTML = 'Disconnected ' + event.reason;
-    };
-    $('#submit').onclick = function(e) {
-        socket.send("{{ party }}" + $('input').value);
-        $('#messages').innerHTML += 'Sent:<br>' + $('input').value + '<br>';
-        $('input').value = '';
-    };
-};
-</script>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ALOB dating</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <section class="hero is-danger is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <figure class="image is-64x64">
+                  <img src="heart.png">
+                </figure>
+                <figure class="image is-16x16">
+                  <!--well this is fucky but it works-->
+                </figure>
+                <div class="container">
+                  <h1 class="title is-spaced">ALOB</h1>
+                  <h2 class="subtitle is-6">
+                    <strong>A dating site for those with computer science tendencies</strong>
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-4">Please select only your *favorite* compsci topics from this list:</h1>
+        <h2 class="subtitle">We know it can be hard to choose!</h2>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="field">
+            <div class="control">
+              <label class="algorithms">
+                <input id="field-1" type="checkbox">
+                algorithms
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="artificial">
+                <input id="field-2" type="checkbox">
+                artificial intelligence
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="dynamic">
+                <input id="field-3" type="checkbox">
+                dynamic programming
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="functional">
+                <input id="field-4" type="checkbox">
+                functional languages
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="networks">
+                <input id="field-5" type="checkbox">
+                networks
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="compilers">
+                <input id="field-6" type="checkbox">
+                compilers
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="compilers">
+                <input id="field-7" type="checkbox">
+                web development
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="compilers">
+                <input id="field-8" type="checkbox">
+                computer security
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="compilers">
+                <input id="field-9" type="checkbox">
+                turing machines
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <label class="data">
+                <input id="field-10" type="checkbox">
+                data structures
+              </label>
+            </div>
+          </div>
+          <figure class="image is-24x24"><!--well this is fucky but it works--></figure>
+          <div class="field is-grouped">
+            <!-- <div class="control">
+              <input id="field-" type="submit" value="Compare with next in queue!" class="button is-danger is-light">
+            </div> -->
+            <div class="control">
+              <a href="#" class="button is-danger is-light is-large" id="compare-btn">Compare</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </body>
+  <footer>
+    <script>
+    window.onload = function() {
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+        var socket = new WebSocket('ws://45.77.146.68:{{ port }}');
 
-<div id="page-wrapper">
-    <pre id="messages">Connecting...</pre>
-    <input id="message" required>
-    <button id="submit">Send Message</button>
-</div>
+        socket.onmessage = function(event) {
+            if ( event.data == '1' ) {
+                window.location = "{{ url_for('match') }}";
+            }
+            else {
+                window.location = "{{ url_for('no_match') }}";
+            }
+        };
 
+        $('#compare-btn').onclick = function(e) {
+            var value = "{{ party }}";
+
+            for ( var i = 1; i <= 10; i++ ) {
+                if ( document.getElementById('field-' + i.toString()).checked ) {
+                    value += '1';
+                }
+                else {
+                    value += '0';
+                }
+            }
+
+            socket.send(value);
+        };
+    };
+    </script>
+  </footer>
+</html>

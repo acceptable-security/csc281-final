@@ -15,8 +15,8 @@ gwsocket -p 7891 \
 sleep 1
 
 cd emp-sh2pc/build/
-./bin/alob /tmp/tmpoutA.fifo /tmp/tmpinA.fifo 12345 &
-./bin/alob /tmp/tmpoutB.fifo /tmp/tmpinB.fifo 12345 &
+./bin/$1 /tmp/tmpoutA.fifo /tmp/tmpinA.fifo 12345 &
+./bin/$1 /tmp/tmpoutB.fifo /tmp/tmpinB.fifo 12345 &
 
 cd ../../web/
 python -m SimpleHTTPServer 8000
