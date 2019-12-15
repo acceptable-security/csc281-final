@@ -1,4 +1,4 @@
-from flask import Flask, escape, request, url_for, redirect
+from flask import Flask, escape, request, url_for, redirect, render_template
 import random
 import subprocess
 import threading
@@ -46,11 +46,11 @@ def spawn_servers_thread(ports, portsAvailable):
 
     # Spawn alob servers
     abA = subprocess.Popen([
-        '../bin/alob', fifoOutA, fifoInA, alob
+        '../emp-sh2pc/build/bin/alob', fifoOutA, fifoInA, alob
     ])
 
     abB = subprocess.Popen([
-        '../bin/alob', fifoOutA, fifoInA, alob
+        '../emp-sh2pc/build/bin/alob', fifoOutB, fifoInB, alob
     ])
 
     print("Done spawning, setting...")
@@ -90,7 +90,7 @@ def find_partner():
         count = 0
 
         while len(port) == 0:
-            if count > 10:
+            if count > 60:
                 return "Failed"
 
             count += 1
@@ -106,9 +106,12 @@ def find_partner():
         return redirect(url_for('main_page', party='B', port=portA))
 
 @app.route('/main/<port>/<party>')
-def main_page(port):
-    return render_template("main", party=party, port=port)
+def main_page(port, party):
+    return render_template("main.html", party=party, port=port)
 
 @app.route('/')
 def hello():
-    return render_template("index")
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000, debug=True, threaded=True)
