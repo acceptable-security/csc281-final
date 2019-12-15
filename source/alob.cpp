@@ -48,7 +48,7 @@ int exec_score(string input_a, string input_b, int _threshold) {
     return bitToInt(acc.geq(threshold, PUBLIC)).reveal<int>();
 }
 
-int do_setup(char* input, int party, int port) {
+int do_setup(char* input, int party, int threshold, int port) {
     NetIO* io = new NetIO(party == ALICE ? nullptr : "127.0.0.1", port);
 
     setup_semi_honest(io, party);
@@ -59,7 +59,7 @@ int do_setup(char* input, int party, int port) {
     string inputs_a(input);
     string inputs_b(input);
 
-    int out = exec_score(inputs_a, inputs_b);
+    int out = exec_score(inputs_a, inputs_b, threshold);
     delete io;
 
     return out;
@@ -83,7 +83,11 @@ int main(int argc, char** argv) {
 
         std::cout << "Received response from " << client_id << std::endl;
 
-        int output = do_setup((char*) &data[1], data[0] == 'A' ? ALICE : BOB, port);
+        int party = data[0] == 'A' ? ALICE : BOB;
+        char* raw_data = (char*) &data[1];
+
+        // TODO: dynamic threshold
+        int output = do_setup(raw_, party, 7, port);
 
         uint8_t str_output[33];
         sprintf((char*) str_output, "%d", output);
