@@ -151,6 +151,12 @@
             }
         };
 
+        socket.onerror = console.log;
+        socket.onclose = function () {
+          alert("Lost connection to websocket");
+          window.location = "{{ url_for('hello') }} "
+        };
+
         $('#compare-btn').onclick = function(e) {
             this.classList.add('is-loading')
             var value = "{{ party }}";
