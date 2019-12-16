@@ -140,7 +140,7 @@
         function $(selector) {
             return document.querySelector(selector);
         }
-        var socket = new WebSocket('wss://45.77.146.68:{{ port.split('-')[0] }}');
+        var socket = new WebSocket('wss://alob.singles:{{ port.split('-')[0] }}');
 
         socket.onmessage = function(event) {
             if ( event.data[0] == '1' ) {
