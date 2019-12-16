@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ALOB dating</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
@@ -15,7 +19,7 @@
             <div class="level-left">
               <div class="level-item">
                 <figure class="image is-64x64">
-                  <img src="{{ url_for('static', filename='heart.png') }}">
+                  <img src="heart.png">
                 </figure>
                 <figure class="image is-16x16">
                   <!--well this is fucky but it works-->
@@ -42,7 +46,7 @@
           <div class="field">
             <div class="control">
               <label class="algorithms">
-                <input id="field-1" type="checkbox">
+                <input type="checkbox">
                 algorithms
               </label>
             </div>
@@ -50,7 +54,7 @@
           <div class="field">
             <div class="control">
               <label class="artificial">
-                <input id="field-2" type="checkbox">
+                <input type="checkbox">
                 artificial intelligence
               </label>
             </div>
@@ -58,7 +62,7 @@
           <div class="field">
             <div class="control">
               <label class="dynamic">
-                <input id="field-3" type="checkbox">
+                <input type="checkbox">
                 dynamic programming
               </label>
             </div>
@@ -66,7 +70,7 @@
           <div class="field">
             <div class="control">
               <label class="functional">
-                <input id="field-4" type="checkbox">
+                <input type="checkbox">
                 functional languages
               </label>
             </div>
@@ -74,7 +78,7 @@
           <div class="field">
             <div class="control">
               <label class="networks">
-                <input id="field-5" type="checkbox">
+                <input type="checkbox">
                 networks
               </label>
             </div>
@@ -82,7 +86,7 @@
           <div class="field">
             <div class="control">
               <label class="compilers">
-                <input id="field-6" type="checkbox">
+                <input type="checkbox">
                 compilers
               </label>
             </div>
@@ -90,7 +94,7 @@
           <div class="field">
             <div class="control">
               <label class="compilers">
-                <input id="field-7" type="checkbox">
+                <input type="checkbox">
                 web development
               </label>
             </div>
@@ -98,7 +102,7 @@
           <div class="field">
             <div class="control">
               <label class="compilers">
-                <input id="field-8" type="checkbox">
+                <input type="checkbox">
                 computer security
               </label>
             </div>
@@ -106,7 +110,7 @@
           <div class="field">
             <div class="control">
               <label class="compilers">
-                <input id="field-9" type="checkbox">
+                <input type="checkbox">
                 turing machines
               </label>
             </div>
@@ -114,7 +118,7 @@
           <div class="field">
             <div class="control">
               <label class="data">
-                <input id="field-10" type="checkbox">
+                <input type="checkbox">
                 data structures
               </label>
             </div>
@@ -122,48 +126,17 @@
           <figure class="image is-24x24"><!--well this is fucky but it works--></figure>
           <div class="field is-grouped">
             <!-- <div class="control">
-              <input id="field-" type="submit" value="Compare with next in queue!" class="button is-danger is-light">
+              <input type="submit" value="Compare with next in queue!" class="button is-danger is-light">
             </div> -->
             <div class="control">
-              <a href="#" class="button is-danger is-light is-large" id="compare-btn">Compare</a>
+              <a href="match.html" class="button is-danger is-light is-large">Compare with next in queue!</a>
+            </div>
+            <div class="control">
+              <a href="nomatch.html" class="button is-light is-large">(test no match)</a>
             </div>
           </div>
         </div>
       </section>
     </section>
   </body>
-  <footer>
-    <script>
-    window.onload = function() {
-        function $(selector) {
-            return document.querySelector(selector);
-        }
-        var socket = new WebSocket('ws://45.77.146.68:{{ port }}');
-
-        socket.onmessage = function(event) {
-            if ( event.data[0] == '1' ) {
-                window.location = "{{ url_for('match') }}";
-            }
-            else {
-                window.location = "{{ url_for('no_match') }}";
-            }
-        };
-
-        $('#compare-btn').onclick = function(e) {
-            var value = "{{ party }}";
-
-            for ( var i = 1; i <= 10; i++ ) {
-                if ( document.getElementById('field-' + i.toString()).checked ) {
-                    value += '1';
-                }
-                else {
-                    value += '0';
-                }
-            }
-
-            socket.send(value);
-        };
-    };
-    </script>
-  </footer>
 </html>

@@ -109,6 +109,15 @@ def find_partner():
 def main_page(port, party):
     return render_template("main.html", party=party, port=port)
 
+@app.route('/match')
+def match():
+    return render_template("match.html")
+
+@app.route('/no_match')
+def no_match():
+    return render_template("nomatch.html")
+
+
 @app.route('/')
 def hello():
     return render_template("index.html")

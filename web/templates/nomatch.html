@@ -19,7 +19,7 @@
             <div class="level-left">
               <div class="level-item">
                 <figure class="image is-64x64">
-                  <img src="heart.png">
+                  <img src="{{ url_for('static', filename='heart.png') }}">
                 </figure>
                 <figure class="image is-16x16">
                   <!--well this is fucky but it works-->
@@ -44,7 +44,7 @@
     </section>
     <section class="section">
     <div class="container">
-      <a href="selection.html" class="button is-danger is-light is-large">Back</a>
+      <a href="{{ url_for('hello') }}" class="button is-danger is-light is-large">Back</a>
     </div>
   </section>
   </body>

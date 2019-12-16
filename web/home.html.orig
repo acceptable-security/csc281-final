@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ALOB dating</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
   <body>
@@ -15,7 +19,7 @@
       <div class="level-left">
         <div class="level-item">
           <figure class="image is-128x128">
-            <img src="{{ url_for('static', filename='heart.png') }}">
+            <img src="heart.png">
           </figure>
           <div class="section">
             <h1 class="title is-1 is-spaced">ALOB</h1>
@@ -40,7 +44,7 @@
   </section>
   <section class="section">
     <div class="container">
-      <a href="{{ url_for('find_partner') }}" class="button is-danger is-light is-large">Get Started!</a>
+      <a href="selection.html" class="button is-danger is-light is-large">Get Started!</a>
     </div>
   </section>
   </body>
