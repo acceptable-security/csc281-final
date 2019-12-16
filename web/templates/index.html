@@ -42,8 +42,14 @@
   </section>
   <section class="section">
     <div class="container">
-      <a href="{{ url_for('find_partner') }}" onClick="is-loading" class="button is-danger is-light is-large">Get Started!</a>
+      <a href="{{ url_for('find_partner') }}" onClick="makeLoading(this)" class="button is-danger is-light is-large">Get Started!</a>
     </div>
   </section>
   </body>
+
+  <script>
+      function makeLoading(obj) {
+        obj.classList.add('is-loading')
+      }
+  </script>
 </html>
