@@ -80,11 +80,11 @@ def spawn_servers_thread(ports, portsAvailable):
 
     # Spawn editdist servers
     edA = subprocess.Popen([
-        '../emp-sh2pc/build/bin/editdist', fifo2OutA, fifo2InA, editdist
+        '../emp-sh2pc/build/bin/editdist-socket', fifo2OutA, fifo2InA, editdist
     ])
 
     edB = subprocess.Popen([
-        '../emp-sh2pc/build/bin/editdist', fifo2OutB, fifo2InB, editdist
+        '../emp-sh2pc/build/bin/editdist-socket', fifo2OutB, fifo2InB, editdist
     ])
 
     ports += [ websocketA + "-" + websocket2A, websocketB + "-" + websocket2B ]
@@ -149,7 +149,7 @@ def old_page(port, party):
 
 
 @app.route('/match/<port>/<party>')
-def match():
+def match(port, party):
     return render_template("match.html", party=party, port=port)
 
 @app.route('/no_match')
