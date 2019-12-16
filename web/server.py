@@ -115,7 +115,7 @@ def match():
 
 @app.route('/no_match')
 def no_match():
-    return render_template("no_match.html")
+    return render_template("nomatch.html")
 
 
 @app.route('/')
