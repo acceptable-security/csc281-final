@@ -141,9 +141,7 @@
         var socket = new WebSocket('ws://45.77.146.68:{{ port }}');
 
         socket.onmessage = function(event) {
-            console.log(event.data);
-            
-            if ( event.data == '1' ) {
+            if ( event.data[0] == '1' ) {
                 window.location = "{{ url_for('match') }}";
             }
             else {
