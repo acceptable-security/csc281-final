@@ -23,4 +23,6 @@ EXPOSE 8000
 EXPOSE 49100-50000
 RUN ["bash", "install_sock.sh"]
 ADD web/ /root/web
+ADD /etc/letsencrypt/live/alob.singles/fullchain.pem /root/web/cert.pem
+ADD /etc/letsencrypt/live/alob.singles/privkey.pem /root/web/key.pem
 CMD ["/bin/bash"]
