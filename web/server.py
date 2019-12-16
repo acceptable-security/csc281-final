@@ -143,11 +143,6 @@ def find_partner():
 def main_page(port, party):
     return render_template("main.html", party=party, port=port)
 
-@app.route('/old/<port>/<party>')
-def old_page(port, party):
-    return render_template("old.html", party=party, port=port)
-
-
 @app.route('/match/<port>/<party>')
 def match(port, party):
     return render_template("match.html", party=party, port=port)

@@ -43,9 +43,29 @@
     </section>
     <section class="section">
     <div class="container">
-      <input class="input" type="text" placeholder="Enter DNA">
-      <a href="{{ url_for('old_page', party=party, port=port) }}" class="button is-danger is-light is-large">Connect</a>
+      <input class="input" id='dna-input' type="text" placeholder="Enter DNA">
+      <a href="{{ url_for('old_page', party=party, port=port) }}" class="button is-danger is-light is-large">Submit</a>
     </div>
   </section>
   </body>
+  <footer>
+    <script>
+    window.onload = function() {
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+        var socket = new WebSocket('ws://45.77.146.68:{{ port.split('-')[1] }}');
+
+        socket.onmessage = function(event) {
+          alert("Edit distance: " + event.data);
+        };
+
+        $('#submit').onclick = function(e) {
+            socket.send("{{ party }}" + $('#dna-input').value);
+            $('input').value = '';
+        };
+    };
+    </script>
+  </footer>
 </html>
+z
