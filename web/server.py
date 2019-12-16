@@ -44,6 +44,8 @@ def spawn_servers_thread(ports, portsAvailable):
         'gwsocket', '-p', websocketA,
                     "--pipein=" + fifoInA,
                     "--pipeout=" + fifoOutA,
+                    "--ssl-cert=./cert.pem",
+                    "--ssl-key=./key.pem",
                     "--strict"
     ])
 
@@ -51,6 +53,8 @@ def spawn_servers_thread(ports, portsAvailable):
         'gwsocket', '-p', websocketB,
                     "--pipein=" + fifoInB,
                     "--pipeout=" + fifoOutB,
+                    "--ssl-cert=./cert.pem",
+                    "--ssl-key=./key.pem",
                     "--strict"
     ])
 
@@ -59,6 +63,8 @@ def spawn_servers_thread(ports, portsAvailable):
         'gwsocket', '-p', websocket2A,
                     "--pipein=" + fifo2InA,
                     "--pipeout=" + fifo2OutA,
+                    "--ssl-cert=./cert.pem",
+                    "--ssl-key=./key.pem",
                     "--strict"
     ])
 
@@ -66,6 +72,8 @@ def spawn_servers_thread(ports, portsAvailable):
         'gwsocket', '-p', websocket2B,
                     "--pipein=" + fifo2InB,
                     "--pipeout=" + fifo2OutB,
+                    "--ssl-cert=./cert.pem",
+                    "--ssl-key=./key.pem",
                     "--strict"
     ])
 
