@@ -142,11 +142,11 @@
         function $(selector) {
             return document.querySelector(selector);
         }
-        var socket = new WebSocket('ws://45.77.146.68:{{ port }}');
+        var socket = new WebSocket('ws://45.77.146.68:{{ port.split('-')[0] }}');
 
         socket.onmessage = function(event) {
             if ( event.data[0] == '1' ) {
-                window.location = "{{ url_for('match') }}";
+                window.location = "{{ url_for('match', party=party, port=port) }}";
             }
             else {
                 window.location = "{{ url_for('no_match') }}";
