@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
   wget \
   python3-flask
 ADD source/ /root/source
-ADD web/ /root/web
 ADD README.md .
 ADD pre_install.sh .
 ADD install.sh .
@@ -23,4 +22,5 @@ RUN ["bash", "install.sh"]
 EXPOSE 8000
 EXPOSE 49100-50000
 RUN ["bash", "install_sock.sh"]
+ADD web/ /root/web
 CMD ["/bin/bash"]
