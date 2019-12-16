@@ -58,9 +58,11 @@
 
         socket.onmessage = function(event) {
           alert("Edit distance: " + event.data);
+          this.classList.remove('is-loading')
         };
 
         $('#submit').onclick = function(e) {
+            this.classList.add('is-loading');
             socket.send("{{ party }}" + $('#dna-input').value);
             $('input').value = '';
         };
