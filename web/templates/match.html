@@ -58,7 +58,7 @@
 
         socket.onmessage = function(event) {
           alert("Edit distance: " + event.data);
-          this.classList.remove('is-loading')
+          $('#submit').classList.remove('is-loading')
         };
 
         $('#submit').onclick = function(e) {
