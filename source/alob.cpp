@@ -17,7 +17,7 @@ Integer bitToInt(Bit bit, int owner) {
 }
 
 void parse_choices(string input, int party, Integer output[]) {
-    if ( input.size() != LEN )  {
+    if ( input.size() < LEN )  {
         throw invalid_argument("invalid input length");
     }
 

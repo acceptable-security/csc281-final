@@ -5,6 +5,6 @@ set -e
 wget http://tar.gwsocket.io/gwsocket-0.3.tar.gz
 tar -xzvf gwsocket-0.3.tar.gz
 cd gwsocket-0.3/
-./configure
+./configure --with-openssl
 make
 make install
